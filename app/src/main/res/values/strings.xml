@@ -5,4 +5,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="create">CREATE</string>
+    <string name="refresh">REFRESH</string>
+    <string name="enter_a_description">enter a description</string>
+    <string name="sign_up">SIGN UP</string>
 </resources>
