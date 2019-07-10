@@ -9,4 +9,13 @@
     <string name="refresh">REFRESH</string>
     <string name="enter_a_description">enter a description</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="todo">TODO</string>
+    <string name="log_out">LOG OUT</string>
+    <string name="home">Home</string>
+    <string name="button">Button</string>
+    <string name="take_pic">TAKE PIC</string>
+    <string name="profile">Profile</string>
+    <string name="compose">Compose</string>
+    <string name="textview">TextView</string>
+    <string name="hipster_attempt">hipster attempt</string>
 </resources>

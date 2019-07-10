@@ -8,7 +8,6 @@ import com.parse.ParseObject;
 
 public class ParseApp extends Application {
 
-
     @Override
     public void onCreate() {
         super.onCreate();
