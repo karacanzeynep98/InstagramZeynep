@@ -39,9 +39,9 @@
     <color name="blue_8">#ff003569</color>
     <color name="blue_9">#ff00264a</color>
     <color name="blueteal_0">#ffd6eef8</color>
-    <color name="blueteal_1">#ff78d0ef</color>
+    <color name="blueteal_1">#78D0EF</color>
     <color name="blueteal_10">#ff02dce5</color>
-    <color name="blueteal_2">#ff61c8ec</color>
+    <color name="blueteal_2">#61C8EC</color>
     <color name="blueteal_3">#ff4bc0ea</color>
     <color name="blueteal_4">#ff34b8e7</color>
     <color name="blueteal_5">#ff1eb1e5</color>
@@ -129,8 +129,8 @@
     <color name="green_0">#fff7fff3</color>
     <color name="green_1">#ffe5ffda</color>
     <color name="green_2">#ffc4ffab</color>
-    <color name="green_3">#ffa5f585</color>
-    <color name="green_4">#ff8dde6d</color>
+    <color name="green_3">#A5F585</color>
+    <color name="green_4">#8DDE6D</color>
     <color name="green_5">#ff70c050</color>
     <color name="green_5_70_transparent">#b370c050</color>
     <color name="green_6">#ff4e9f2e</color>

@@ -16,6 +16,8 @@
     <string name="take_pic">TAKE PIC</string>
     <string name="profile">Profile</string>
     <string name="compose">Compose</string>
-    <string name="textview">TextView</string>
     <string name="hipster_attempt">hipster attempt</string>
+    <string name="timestamp">TimeStamp</string>
+    <string name="action_dm">DirectMessage</string>
+    <string name="textview" />
 </resources>

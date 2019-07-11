@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.etPassword);
         loginBtn = findViewById(R.id.buttonLogin);
         signupBtn = findViewById(R.id.btnSignup);
+
+        // Initialize a new GradientDrawable instance
+        GradientDrawable gd = new GradientDrawable();
+        // Set the gradient drawable background to transparent
+        gd.setColor(Color.parseColor("#00ffffff"));
+
+        // Set a border for the gradient drawable
+        gd.setStroke(2,Color.GRAY);
+
+        // Finally, apply the gradient drawable to the edit text background
+        usernameInput.setBackground(gd);
+        passwordInput.setBackground(gd);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
 

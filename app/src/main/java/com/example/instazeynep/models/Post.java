@@ -1,17 +1,24 @@
 package com.example.instazeynep.models;
 
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.Date;
+
+
 @ParseClassName("Post")
 public class Post extends ParseObject {
+
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
     public static final String KEY_CREATED_AT ="createdAt";
+
+    public Post() {}
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -37,7 +44,12 @@ public class Post extends ParseObject {
         put(KEY_USER, user);
     }
 
-    public static class Query extends ParseQuery<Post> {
+    /*public String getCreatedAtString() {
+        return getString(KEY_CREATED_AT);
+    }*/
+
+    public static class Query extends ParseQuery<Post>  {
+
 
         public Query() {
             super(Post.class);

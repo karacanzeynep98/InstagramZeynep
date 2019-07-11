@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/etUsername"
-        android:layout_width="0dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="136dp"
         android:ems="10"
@@ -16,13 +16,13 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="0dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/password"
@@ -35,9 +35,11 @@
 
     <Button
         android:id="@+id/buttonLogin"
-        android:layout_width="0dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
+        android:background="@color/blueteal_2"
         android:text="@string/log_in"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/btnSignup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -46,13 +48,24 @@
 
     <Button
         android:id="@+id/btnSignup"
-        android:layout_width="0dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
+        android:background="@color/green_3"
         android:text="@string/sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/etUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/nav_logo_whiteout" />
 
 </android.support.constraint.ConstraintLayout>
