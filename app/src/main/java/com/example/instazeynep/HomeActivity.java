@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Instagram");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#bfffffff")));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80a307ba")));
         getSupportActionBar().setLogo(getDrawable(R.drawable.icon));
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
