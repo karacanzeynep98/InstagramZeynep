@@ -35,6 +35,7 @@ import com.example.instazeynep.R;
 import com.example.instazeynep.models.BitmapScaler;
 import com.example.instazeynep.models.Post;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -78,7 +79,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvHandle.setText(ParseUser.getCurrentUser().getUsername());
         tvHandle.setTextColor(Color.parseColor("#ff5eb1ff"));
 
-        if (ParseUser.getCurrentUser().getParseFile("profile_image") != null) {
+        if (ParseUser.getCurrentUser().getParseFile("profileImage") != null) {
             Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl())
                     .apply(RequestOptions.circleCropTransform())
                     .into(myImage);
@@ -135,7 +136,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         //set the layout manager on the recycler view ==> how you layout your contents onto the screen
         rvPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        if (ParseUser.getCurrentUser().getParseFile("profile_image") != null) {
+        if (ParseUser.getCurrentUser().getParseFile("profileImage") != null) {
             Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl())
                     .apply(RequestOptions.circleCropTransform())
                     .into(myImage);
