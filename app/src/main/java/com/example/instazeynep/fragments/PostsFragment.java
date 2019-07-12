@@ -9,8 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.instazeynep.EndlessRecyclerViewScrollListener;
 import com.example.instazeynep.PostsAdapter;
@@ -32,7 +35,7 @@ public class PostsFragment extends Fragment {
     private PostsAdapter adapter;
     private List<Post> mPosts;
     private EndlessRecyclerViewScrollListener scrollListener;
-    String maxId;
+
 
     @Nullable
     @Override
@@ -48,14 +51,14 @@ public class PostsFragment extends Fragment {
         //create the data source ==> list of different post objects
         mPosts = new ArrayList<>();
         //create the adapter ==> how to show the contents from the view
-        adapter = new PostsAdapter(getContext(), mPosts);
+        adapter = new PostsAdapter(getContext(), mPosts, 0);
         //set the adapter on the recycler view
         rvPosts.setAdapter(adapter);
         //set the layout manager on the recycler view ==> how you layout your contents onto the screen
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPosts.setLayoutManager(linearLayoutManager);
 
-        loadTopPosts();
+        loadTopPosts(0);
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -80,23 +83,13 @@ public class PostsFragment extends Fragment {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi(page);
+                loadTopPosts(page);
             }
         };
         // Adds the scroll listener to RecyclerView
         rvPosts.addOnScrollListener(scrollListener);
     }
 
-    public void loadNextDataFromApi(int offset) {
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
-
-        loadTopPosts();
-
-    }
 
     public void fetchTimelineAsync(int page) {
         adapter.clear();
@@ -123,16 +116,18 @@ public class PostsFragment extends Fragment {
                     Log.e("PostsFragment", "Error with query");
                     e.printStackTrace();
                 }
-            }
-        });
 
-        swipeContainer.setRefreshing(false);
+                swipeContainer.setRefreshing(false);
+            }
+
+        });
     }
 
 
-    private void loadTopPosts() { //or QueryPosts()
+    private void loadTopPosts(int page) { //or QueryPosts()
         final Post.Query postsQuery = new Post.Query();
         postsQuery.setLimit(20);
+        postsQuery.setSkip(page * 20);
         postsQuery.include(Post.KEY_USER);
         postsQuery.addDescendingOrder(Post.KEY_CREATED_AT);
         postsQuery.findInBackground(new FindCallback<Post>() {

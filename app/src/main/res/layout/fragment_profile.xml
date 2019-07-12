@@ -11,16 +11,16 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogOut" />
+        app:layout_constraintTop_toBottomOf="@+id/etBio" />
 
     <Button
         android:id="@+id/btnLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/log_out"
         android:background="@color/pink_2"
+        android:text="@string/log_out"
         app:layout_constraintBottom_toTopOf="@+id/rvPosts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -29,20 +29,22 @@
 
     <ImageView
         android:id="@+id/ivMyImage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/instagram_user_outline_24"
         app:layout_constraintBottom_toTopOf="@+id/rvPosts"
         app:layout_constraintEnd_toStartOf="@+id/tvHandle"
-        app:layout_constraintHorizontal_bias="0.674"
+        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.288"
-        app:srcCompat="@drawable/image1" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvHandle"
         android:layout_width="173dp"
         android:layout_height="wrap_content"
+        android:hint="@string/username"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/rvPosts"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,14 +55,15 @@
 
     <EditText
         android:id="@+id/etBio"
-        android:layout_width="171dp"
+        android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:hint="Type your bio"
+        android:inputType="text"
+        android:maxLines="1"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/rvPosts"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogOut"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvHandle"
         app:layout_constraintTop_toBottomOf="@+id/tvHandle"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintVertical_bias="0.265" />
 
 </android.support.constraint.ConstraintLayout>

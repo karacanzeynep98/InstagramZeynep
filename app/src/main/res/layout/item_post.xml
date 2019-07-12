@@ -8,17 +8,16 @@
 
     <TextView
         android:id="@+id/tvHandle"
-        android:layout_width="295dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="1dp"
+        android:layout_width="223dp"
+        android:layout_height="39dp"
         android:text="@string/textview"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/ivDetailsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintEnd_toStartOf="@+id/ivDetailsButton"
+        app:layout_constraintStart_toEndOf="@+id/ivUserImage"
+        app:layout_constraintTop_toTopOf="@+id/ivDetailsButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/ivImage"
@@ -38,7 +37,7 @@
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/hipster_attempt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,67 +45,68 @@
         app:layout_constraintTop_toBottomOf="@+id/ivImage" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivDetailsButton"
         android:layout_width="25dp"
         android:layout_height="25dp"
         app:layout_constraintBottom_toTopOf="@+id/ivImage"
-        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:layout_constraintEnd_toEndOf="@+id/ivSaveButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvHandle"
-        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintStart_toStartOf="@+id/ivSaveButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.72"
         app:srcCompat="@drawable/media_option_button" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/ivDirectMessage"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="120dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivCommentImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/ivCommentImage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/ivCommentImage"
         app:srcCompat="@drawable/direct" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/ivLikeButton"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/tvNumLikes"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.084"
         app:srcCompat="@drawable/ufi_heart" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/ivCommentImage"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNumLikes"
+        app:layout_constraintEnd_toStartOf="@+id/ivDirectMessage"
+        app:layout_constraintStart_toEndOf="@+id/tvNumLikes"
+        app:layout_constraintTop_toTopOf="@+id/tvNumLikes"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ufi_comment" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/ivSaveButton"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@+id/tvDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.919"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/ivDirectMessage"
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
         app:layout_constraintVertical_bias="0.105"
         app:srcCompat="@drawable/ufi_save" />
@@ -116,10 +116,33 @@
         android:layout_width="81dp"
         android:layout_height="24dp"
         app:layout_constraintBottom_toTopOf="@+id/tvDescription"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintEnd_toStartOf="@+id/ivSaveButton"
         app:layout_constraintHorizontal_bias="0.852"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/ivDirectMessage"
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
         app:layout_constraintVertical_bias="0.098" />
+
+    <ImageView
+        android:id="@+id/ivUserImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/ivImage"
+        app:layout_constraintEnd_toStartOf="@+id/tvHandle"
+        app:layout_constraintHorizontal_bias="0.525"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.781"
+        app:srcCompat="@drawable/instagram_user_outline_24" />
+
+    <TextView
+        android:id="@+id/tvNumLikes"
+        android:layout_width="19dp"
+        android:layout_height="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLikeButton"
+        app:layout_constraintEnd_toStartOf="@+id/ivCommentImage"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivLikeButton"
+        app:layout_constraintTop_toTopOf="@+id/ivLikeButton"
+        app:layout_constraintVertical_bias="0.174" />
 
 </android.support.constraint.ConstraintLayout>

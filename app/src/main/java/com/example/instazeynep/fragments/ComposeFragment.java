@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instazeynep.HomeActivity;
@@ -51,6 +52,7 @@ public class ComposeFragment extends Fragment {
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     private File photoFile;
+    private ProgressBar pb;
 
     @Nullable
     @Override
@@ -59,16 +61,22 @@ public class ComposeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         descriptionInput = view.findViewById(R.id.etDescription);
         createButton = view.findViewById(R.id.createBtn);
         takePicBtn = view.findViewById(R.id.btnTakePicture);
         ivImageCamera = view.findViewById(R.id.ivCameraImage);
 
+        // on some click or some loading we need to wait for...
+        pb = (ProgressBar) view.findViewById(R.id.pbLoading);
+
+
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pb.setVisibility(ProgressBar.VISIBLE);
+
                 final String description = descriptionInput.getText().toString();
                 final ParseUser user = ParseUser.getCurrentUser();
 
@@ -79,6 +87,7 @@ public class ComposeFragment extends Fragment {
                 }
 
                 createPost(description,photoFile, user);
+
             }
         });
 
@@ -174,6 +183,7 @@ public class ComposeFragment extends Fragment {
     }
 
     private void createPost(String description, File photoFile, ParseUser user) {
+
         final Post newPost = new Post();
         newPost.setDescription(description);
         newPost.setImage(new ParseFile(photoFile));
@@ -186,6 +196,7 @@ public class ComposeFragment extends Fragment {
                     Log.d("HomeActivity", "Create post success");
                     descriptionInput.setText("");
                     ivImageCamera.setImageResource(0);
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                 } else {
                     Log.e("HomeActivity", "Signin failure.");
                     e.printStackTrace();

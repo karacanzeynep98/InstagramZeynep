@@ -1,10 +1,9 @@
 package com.example.instazeynep.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.instazeynep.HomeActivity;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instazeynep.MainActivity;
 import com.example.instazeynep.PostsAdapter;
 import com.example.instazeynep.R;
@@ -35,6 +36,7 @@ import com.example.instazeynep.models.BitmapScaler;
 import com.example.instazeynep.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
@@ -61,7 +63,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
     public String photoFileName = "photo.jpg";
     private File photoFile;
-    private String my_username = "zeycorder";
 
 
     @Nullable
@@ -72,12 +73,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         myImage = view.findViewById(R.id.ivMyImage);
         logOutButton = (Button) view.findViewById(R.id.btnLogOut);
         tvHandle = (TextView) view.findViewById(R.id.tvHandle);
-        tvHandle.setText(my_username);
         etBio = (EditText) view.findViewById(R.id.etBio);
 
-        //TODO how to make this stay there? The cursor should go away
-        String inputBio = etBio.getText().toString();
-        etBio.setText(inputBio);
+        tvHandle.setText(ParseUser.getCurrentUser().getUsername());
+        tvHandle.setTextColor(Color.parseColor("#ff5eb1ff"));
+
+        Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl()).into(myImage);
+
+        etBio.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    ParseUser.getCurrentUser().put("userBio", etBio.getText().toString());
+                    ParseUser.getCurrentUser().saveInBackground();
+                    return true;
+                }
+
+                return  false;
+            }
+        });
+        etBio.setText(ParseUser.getCurrentUser().getString("userBio"));
 
         logOutButton.setOnClickListener(this);
 
@@ -99,6 +114,56 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         ParseUser.logOut();
         final Intent intent = new Intent(getContext(), MainActivity.class);
         getActivity().startActivity(intent);
+    }
+
+    //The handle to the view that has been created
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        rvPosts = view.findViewById(R.id.rvPosts);
+
+        //create the data source ==> list of different post objects
+        mPosts = new ArrayList<>();
+        //create the adapter ==> how to show the contents from the view
+        adapter = new PostsAdapter(getContext(), mPosts, 1);
+        //set the adapter on the recycler view
+        rvPosts.setAdapter(adapter);
+        //set the layout manager on the recycler view ==> how you layout your contents onto the screen
+        rvPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+        Glide.with(getContext())
+                .load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl())
+                .apply(RequestOptions.circleCropTransform())
+                .into(myImage);
+
+
+        loadTopPosts();
+    }
+
+    protected void loadTopPosts(){
+        final Post.Query postsQuery = new Post.Query();
+        postsQuery.setLimit(20);
+        postsQuery.include(Post.KEY_USER);
+        postsQuery.addDescendingOrder(Post.KEY_CREATED_AT);
+        postsQuery.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        postsQuery.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+
+                if (e == null) {
+
+                    mPosts.addAll(objects);
+                    adapter.notifyDataSetChanged();
+
+                    for (int i = 0; i < objects.size(); ++i) {
+                        Log.d("PostsFragment", "Post[" + i + "] = " + objects.get(i).getDescription()
+                                + "\nusername =" + objects.get(i).getUser().getUsername());
+                    }
+                } else {
+                    Log.e("PostsFragment", "Error with query");
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void launchCamera() {
@@ -139,50 +204,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return file;
     }
 
-    //The handle to the view that has been created
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        rvPosts = view.findViewById(R.id.rvPosts);
-
-        //create the data source ==> list of different post objects
-        mPosts = new ArrayList<>();
-        //create the adapter ==> how to show the contents from the view
-        adapter = new PostsAdapter(getContext(), mPosts);
-        //set the adapter on the recycler view
-        rvPosts.setAdapter(adapter);
-        //set the layout manager on the recycler view ==> how you layout your contents onto the screen
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        loadTopPosts();
-    }
-
-    protected void loadTopPosts(){
-        final Post.Query postsQuery = new Post.Query();
-        postsQuery.setLimit(20);
-        postsQuery.include(Post.KEY_USER);
-        postsQuery.addDescendingOrder(Post.KEY_CREATED_AT);
-        postsQuery.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
-        postsQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-
-                if (e == null) {
-
-                    mPosts.addAll(objects);
-                    adapter.notifyDataSetChanged();
-
-                    for (int i = 0; i < objects.size(); ++i) {
-                        Log.d("PostsFragment", "Post[" + i + "] = " + objects.get(i).getDescription()
-                                + "\nusername =" + objects.get(i).getUser().getUsername());
-                    }
-                } else {
-                    Log.e("PostsFragment", "Error with query");
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -200,6 +221,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
                 // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
                 File resizedFile = getPhotoFileUri(photoFileName + "_resized");
+
+                ParseFile parsefile = new ParseFile(resizedFile);
+                ParseUser.getCurrentUser().put("profileImage", parsefile);
+                ParseUser.getCurrentUser().saveInBackground();
+
                 try {
                     resizedFile.createNewFile();
                 } catch (IOException e) {
