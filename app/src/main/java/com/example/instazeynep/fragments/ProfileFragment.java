@@ -78,7 +78,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvHandle.setText(ParseUser.getCurrentUser().getUsername());
         tvHandle.setTextColor(Color.parseColor("#ff5eb1ff"));
 
-        Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl()).into(myImage);
+        if (ParseUser.getCurrentUser().getParseFile("profile_image") != null) {
+            Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(myImage);
+        } else {
+            myImage.setImageResource(R.drawable.instagram_user_outline_24);
+        }
 
         etBio.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -129,11 +135,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         //set the layout manager on the recycler view ==> how you layout your contents onto the screen
         rvPosts.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        Glide.with(getContext())
-                .load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl())
-                .apply(RequestOptions.circleCropTransform())
-                .into(myImage);
-
+        if (ParseUser.getCurrentUser().getParseFile("profile_image") != null) {
+            Glide.with(getContext()).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl())
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(myImage);
+        } else {
+            myImage.setImageResource(R.drawable.instagram_user_outline_24);
+        }
 
         loadTopPosts();
     }
