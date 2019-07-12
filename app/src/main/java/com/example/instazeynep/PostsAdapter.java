@@ -48,12 +48,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override//TODO figure out how to pass the data between two chunks
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
-
-        /*if(whichFragment == 0){
-
-        }else if (whichFragment == 1) {
-
-        }*/
         holder.bind(post);
     }
 
@@ -87,10 +81,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView directMessage;
         private ImageView saveImage;
         private ImageView ivDetailsButton;
+        private TextView tvHandle2;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvHandle = itemView.findViewById(R.id.tvHandle);
+            tvHandle2 = itemView.findViewById(R.id.tvHandle2);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvTime = itemView.findViewById(R.id.tvCreationTime);
@@ -109,6 +105,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             if(whichFragment == 0) {
                 tvHandle.setText(post.getUser().getUsername());
+                tvHandle2.setText(post.getUser().getUsername());
                 ParseFile image = post.getImage();
                 if (image != null) {
                     Glide.with(context).load(image.getUrl()).into(ivImage);

@@ -88,7 +88,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     ParseUser.getCurrentUser().saveInBackground();
                     return true;
                 }
-
                 return  false;
             }
         });

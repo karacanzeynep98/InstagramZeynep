@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.etPassword);
         loginBtn = findViewById(R.id.buttonLogin);
         signupBtn = findViewById(R.id.btnSignup);
+
+        passwordInput.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         // Initialize a new GradientDrawable instance
         GradientDrawable gd = new GradientDrawable();
